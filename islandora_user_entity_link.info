@@ -1,0 +1,7 @@
+name = "Islandora User Entity Linker"
+description = "A default Islandora module to handle the management of a one to one relationship between users and entitys"
+dependencies[] = islandora
+package = Islandora
+version = 7.x-dev
+core = 7.x
+configure = admin/islandora/user_entity_link

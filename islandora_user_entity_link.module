@@ -1,0 +1,96 @@
+<?php
+
+/**
+ * @file
+ * Hooks and callbacks for this module.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function islandora_user_entity_link_menu() {
+  $items = array();
+  $items['admin/islandora/user_entity_link'] = array(
+    'title' => 'User/Entity Link Module',
+    'description' => 'Configure Management of relationships between users and entitys',
+    'page callback' => 'drupal_get_form',
+    'access arguments' => array('administer site configuration'),
+    'page arguments' => array('islandora_user_entity_link_admin'),
+    'file' => 'includes/form.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['islandora_user_entity_link/autocomplete'] = array(
+    'page callback' => 'islandora_user_entity_link_autocomplete',
+    'access arguments' => array('use autocomplete'),
+    'type' => MENU_CALLBACK
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function islandora_user_entity_link_form_alter(&$form, $form_state, $form_id) {
+  drupal_set_message($form_id);
+  drupal_set_message(variable_get('islandora_solr_url', 'localhost:8080/solr'));
+  if ($form_id == 'user_profile_form') {
+    $form['userentity_fieldset'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Person Entity'),
+      '#weight' => 50,
+      '#collapsible' => true,
+      '#collapsed' => true,
+    );
+
+    $form['userentity_fieldset']['userentity'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Add link to Entity record'),
+      '#size' => 30,
+      '#maxlength' => 60,
+      '#autocomplete_path' => 'islandora_user_entity_link/autocomplete',
+      '#default_value' => '',
+      '#weight' => 1,
+    );
+  }
+}
+
+/**
+ * autocomplete callback.
+ * @param string $string
+ */
+function islandora_user_entity_link_autocomplete($string) {
+	$matches = array();
+// 	$solr_url = variable_get('islandora_solr_url', 'localhost:8080/solr');
+// 	$num_terms = 0;
+	
+// 	// If Solr is available get Luke.
+// 	if (islandora_solr_ping($solr_url)) {
+// 		$luke_url = $solr_url . '/admin/luke';
+// 		// Check for scheme specifier.
+// 		$luke_url = islandora_solr_check_http($luke_url);
+// 		$luke_query = array(
+// 				'wt' => 'json',
+// 				'numTerms' => $num_terms,
+// 		);
+// 		if ($field) {
+// 			$luke_query['fl'] = $field;
+// 		}
+// 		// Generate nice URL.
+// 		$luke_url = url($luke_url, array('absolute' => TRUE, 'query' => $luke_query));
+// 		$r = drupal_http_request($luke_url);
+// 		if ($r->code / 100 === 2) {
+// 			$luke_json = $r->data;
+// 			// Parse JSON.
+// 			$luke_array = json_decode($luke_json, TRUE);
+// 			return $luke_array;
+// 		}
+		
+		
+// 	}
+    $matches['one'] = 'one';
+		  $matches['two'] = 'two';
+		  $matches['three'] = 'three';
+		  $matches['four'] = 'four';
+		  $matches['five'] = 'five';
+  drupal_json_output($matches);
+}
