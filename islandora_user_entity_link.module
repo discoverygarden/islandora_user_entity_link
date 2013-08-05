@@ -22,7 +22,7 @@ function islandora_user_entity_link_menu() {
   $items['islandora_user_entity_link/autocomplete'] = array(
     'page callback' => 'islandora_user_entity_link_autocomplete',
     'access arguments' => array('use autocomplete'),
-    'type' => MENU_CALLBACK
+    'type' => MENU_CALLBACK,
   );
   return $items;
 }
@@ -38,8 +38,8 @@ function islandora_user_entity_link_form_alter(&$form, $form_state, $form_id) {
       '#type' => 'fieldset',
       '#title' => t('Person Entity'),
       '#weight' => 50,
-      '#collapsible' => true,
-      '#collapsed' => true,
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
     );
 
     $form['userentity_fieldset']['userentity'] = array(
@@ -56,41 +56,43 @@ function islandora_user_entity_link_form_alter(&$form, $form_state, $form_id) {
 
 /**
  * autocomplete callback.
+ *
  * @param string $string
  */
 function islandora_user_entity_link_autocomplete($string) {
-	$matches = array();
-// 	$solr_url = variable_get('islandora_solr_url', 'localhost:8080/solr');
-// 	$num_terms = 0;
-	
-// 	// If Solr is available get Luke.
-// 	if (islandora_solr_ping($solr_url)) {
-// 		$luke_url = $solr_url . '/admin/luke';
-// 		// Check for scheme specifier.
-// 		$luke_url = islandora_solr_check_http($luke_url);
-// 		$luke_query = array(
-// 				'wt' => 'json',
-// 				'numTerms' => $num_terms,
-// 		);
-// 		if ($field) {
-// 			$luke_query['fl'] = $field;
-// 		}
-// 		// Generate nice URL.
-// 		$luke_url = url($luke_url, array('absolute' => TRUE, 'query' => $luke_query));
-// 		$r = drupal_http_request($luke_url);
-// 		if ($r->code / 100 === 2) {
-// 			$luke_json = $r->data;
-// 			// Parse JSON.
-// 			$luke_array = json_decode($luke_json, TRUE);
-// 			return $luke_array;
-// 		}
-		
-		
-// 	}
-    $matches['one'] = 'one';
-		  $matches['two'] = 'two';
-		  $matches['three'] = 'three';
-		  $matches['four'] = 'four';
-		  $matches['five'] = 'five';
+  $matches = array();
+  /*
+  $solr_url = variable_get('islandora_solr_url', 'localhost:8080/solr');
+  $num_terms = 0;
+
+  // If Solr is available get Luke.
+  if (islandora_solr_ping($solr_url)) {
+    $luke_url = $solr_url . '/admin/luke';
+    // Check for scheme specifier.
+    $luke_url = islandora_solr_check_http($luke_url);
+    $luke_query = array(
+      'wt' => 'json',
+      'numTerms' => $num_terms,
+    );
+    if ($field) {
+      $luke_query['fl'] = $field;
+    }
+    // Generate nice URL.
+    $luke_url = url($luke_url, array('absolute' => TRUE, 'query' => $luke_query));
+    $r = drupal_http_request($luke_url);
+    if ($r->code / 100 === 2) {
+      $luke_json = $r->data;
+      // Parse JSON.
+      $luke_array = json_decode($luke_json, TRUE);
+      return $luke_array;
+    }
+  }
+  */
+  $matches['one'] = 'one';
+  $matches['two'] = 'two';
+  $matches['three'] = 'three';
+  $matches['four'] = 'four';
+  $matches['five'] = 'five';
+
   drupal_json_output($matches);
 }
