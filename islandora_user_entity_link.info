@@ -6,4 +6,3 @@ dependencies[] = islandora_entities
 package = Islandora
 version = 7.x-dev
 core = 7.x
-configure = admin/islandora/user_entity_link
