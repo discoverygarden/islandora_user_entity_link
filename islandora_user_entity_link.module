@@ -42,11 +42,6 @@ function islandora_user_entity_link_menu() {
  * Implements hook_form_alter().
  *
  * @global $user
- *
- * @param array $form
- *   The Drupal form definition.
- * @param array $form_state
- *   The Drupal form state.
  */
 function islandora_user_entity_link_form_user_profile_form_alter(&$form, &$form_state) {
   module_load_include('inc', 'islandora_user_entity_link', 'includes/utilities');
@@ -67,7 +62,7 @@ function islandora_user_entity_link_form_user_profile_form_alter(&$form, &$form_
       '#description' => l($linked_object['label'], "islandora/object/{$linked_object['object']}"),
     );
   }
-  else if (user_access(ISLANDORA_USER_ENTITY_LINK_MANAGE_LINKS)){
+  elseif (user_access(ISLANDORA_USER_ENTITY_LINK_MANAGE_LINKS)) {
     $form['islandora_user_entity_link_fieldset']['entity_object'] = array(
       '#type' => 'textfield',
       '#title' => t('Add link to Entity record:'),
@@ -182,8 +177,6 @@ function islandora_user_entity_link_object_to_user_form($form, &$form_state, Abs
  *   The Drupal form definition.
  * @param array $form_state
  *   The Drupal form state.
- * @param AbstractObject $islandora_object
- *   The object to build the form for.
  *
  * @return array
  *   The Drupal form definition.

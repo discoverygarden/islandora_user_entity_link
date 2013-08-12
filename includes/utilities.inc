@@ -2,12 +2,7 @@
 
 /**
  * @file
- * Holds helper fuctionality for islandora_user_entity_link.
- *
- * RI entries for links look like the following:
- * ISLANDORA_RELS_EXT_URI . ISLANDORA_USER_ENTITY_LINK_LINK_RELATIONSHIP
- * with the object looking like {"base_url":"www.xample.com", "user_id":33}
- * This avoids the added compexity of an intermediary object in the datamodel.
+ * Holds helper functionality for islandora_user_entity_link.
  */
 
 /**
@@ -157,8 +152,8 @@ function islandora_user_entity_link_decode($link_uri) {
 
   $site_end_index = strpos($link_uri, '/user/');
   $user_start_index = $site_end_index + 6;
-  $link['base_url'] = substr ($link_uri, 0, $site_end_index);
-  $link['user_id'] = substr ($link_uri, $user_start_index);
+  $link['base_url'] = substr($link_uri, 0, $site_end_index);
+  $link['user_id'] = substr($link_uri, $user_start_index);
 
   return $link;
 }
