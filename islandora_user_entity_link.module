@@ -64,7 +64,7 @@ function islandora_user_entity_link_form_user_profile_form_alter(&$form, &$form_
     $form['islandora_user_entity_link_fieldset']['user_entity'] = array(
       '#type' => 'item',
       '#title' => t('User is linked to:'),
-      '#description' => l("islandora/object/{$linked_object['object']}", $linked_object['label']),
+      '#description' => l($linked_object['label'], "islandora/object/{$linked_object['object']}"),
     );
   }
   else if (user_access(ISLANDORA_USER_ENTITY_LINK_MANAGE_LINKS)){

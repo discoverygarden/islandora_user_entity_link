@@ -68,9 +68,9 @@ function islandora_user_entity_link_object_get_link(AbstractObject $islandora_ob
 
   $link_relations = $islandora_object->relationships->GET(
     ISLANDORA_RELS_EXT_URI,
-    ISLANDORA_USER_ENTITY_LINK_LINK_RELATIONSHIP,
-    RELS_TYPE_FULL_URI
+    ISLANDORA_USER_ENTITY_LINK_LINK_RELATIONSHIP
   );
+
   if ($link_relations) {
     $link_uri = $link_relations[0]['object']['value'];
     // Only return REL if the link is from this site.
@@ -99,7 +99,6 @@ function islandora_user_entity_link_user_get_linked_object($user_id) {
   $tuque = islandora_get_tuque_connection();
 
   $link_uri = islandroa_user_entity_link_create_link_uri($user_id);
-  dsm($link_uri);
 
   $query = "PREFIX islandora: <" . ISLANDORA_RELS_EXT_URI . ">
             PREFIX fm: <" . FEDORA_MODEL_URI . ">
@@ -114,14 +113,20 @@ function islandora_user_entity_link_user_get_linked_object($user_id) {
                 ?object fm:label ?label
               }
             }";
-dsm($query);
+
   $results = $tuque->repository->ri->sparqlQuery($query, 'unlimited');
-  dsm($results, '$results');
+  if ($results) {
+    return array(
+      'object' => $results[0]['object']['value'],
+      'label' => $results[0]['label']['value'],
+    );
+  }
+
   return FALSE;
 }
 
 /**
- * Will creat a URI defining a link to a Drupal user.
+ * Will create a URI defining a link to a Drupal user.
  *
  * @global $base_url
  *   Assumes the current site's base_url.
