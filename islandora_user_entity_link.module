@@ -59,15 +59,14 @@ function islandora_user_entity_link_form_user_profile_form_alter(&$form, &$form_
     $form['islandora_user_entity_link_fieldset']['user_entity'] = array(
       '#type' => 'item',
       '#title' => t('User is linked to:'),
-      '#description' => l($linked_object['label'], "islandora/object/{$linked_object['object']}"),
+      '#description' => l(check_plain($linked_object['label']), "islandora/object/{$linked_object['object']}"),
     );
   }
   elseif (user_access(ISLANDORA_USER_ENTITY_LINK_MANAGE_LINKS)) {
     $form['islandora_user_entity_link_fieldset']['entity_object'] = array(
       '#type' => 'textfield',
       '#title' => t('Add link to Entity record:'),
-      '#size' => 30,
-      '#maxlength' => 60,
+      '#size' => 50,
       '#autocomplete_path' => 'islandora_user_entity_link/autocomplete',
       '#default_value' => '',
       '#weight' => 1,
@@ -155,7 +154,7 @@ function islandora_user_entity_link_object_to_user_form($form, &$form_state, Abs
     $form['islandora_user_entity_link_fieldset']['druapl_user'] = array(
       '#type' => 'item',
       '#title' => t('Entity is linked to:'),
-      '#description' => l($username, "user/$link_user"),
+      '#description' => l(check_plain($username), "user/$link_user"),
     );
     if (user_access(ISLANDORA_USER_ENTITY_LINK_MANAGE_LINKS)) {
       $form['islandora_user_entity_link_fieldset']['remove_link'] = array(
