@@ -85,14 +85,15 @@ function islandora_user_entity_link_form_user_profile_form_alter(&$form, &$form_
  */
 function islandora_user_entity_link_form_user_profile_form_submit($form, &$form_state) {
   module_load_include('inc', 'islandora_user_entity_link', 'includes/utilities');
+  if ($form_state['values']['entity_object']) {
+    // Single quote used as delimiter.
+    $entitiy_string_length = strlen($form_state['values']['entity_object']);
+    $id_start_pos = strrpos($form_state['values']['entity_object'], "'", -2) + 1;
+    $islandora_object_id_length = $entitiy_string_length - $id_start_pos - 1;
+    $islandora_object_id = substr($form_state['values']['entity_object'], $id_start_pos, $islandora_object_id_length);
 
-  // Single quote used as delimiter.
-  $entitiy_string_length = strlen($form_state['values']['entity_object']);
-  $id_start_pos = strrpos($form_state['values']['entity_object'], "'", -2) + 1;
-  $islandora_object_id_length = $entitiy_string_length - $id_start_pos - 1;
-  $islandora_object_id = substr($form_state['values']['entity_object'], $id_start_pos, $islandora_object_id_length);
-
-  islandora_user_entity_link_add_link($islandora_object_id, $form_state['values']['uid']);
+    islandora_user_entity_link_add_link($islandora_object_id, $form_state['values']['uid']);
+  }
 }
 
 /**
