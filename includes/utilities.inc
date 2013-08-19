@@ -157,3 +157,20 @@ function islandora_user_entity_link_decode($link_uri) {
 
   return $link;
 }
+
+/**
+ * This will decode an autocomplete string.
+ *
+ * @param string $autocomplete
+ *   The string to decode.
+ *
+ * @return string
+ *   The PID embeded in the autocomplete string.
+ */
+function islandora_user_entity_link_decode_autocomplete($autocomplete) {
+  // Single quote used as delimiter.
+  $entitiy_string_length = strlen($autocomplete);
+  $id_start_pos = strrpos($autocomplete, "'", -2) + 1;
+  $islandora_object_id_length = $entitiy_string_length - $id_start_pos - 1;
+  return substr($autocomplete, $id_start_pos, $islandora_object_id_length);
+}
