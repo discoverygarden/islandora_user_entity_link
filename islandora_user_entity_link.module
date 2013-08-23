@@ -72,6 +72,26 @@ function islandora_user_entity_link_form_user_profile_form_alter(&$form, &$form_
       '#weight' => 1,
     );
     $form['#submit'][] = 'islandora_user_entity_link_form_user_profile_form_submit';
+    $form['#validate'][] = 'islandora_user_entity_link_form_user_profile_form_validate';
+  }
+}
+
+/**
+ * Validation handler for user_profile_form.
+ *
+ * @param array $form
+ *   The Drupal form definition.
+ * @param array $form_state
+ *   The Drupal form state.
+ */
+function islandora_user_entity_link_form_user_profile_form_validate($form, &$form_state) {
+  module_load_include('inc', 'islandora_user_entity_link', 'includes/utilities');
+  if ($form_state['values']['entity_object']) {
+    $potential_pid  = islandora_user_entity_link_decode_autocomplete($form_state['values']['entity_object']);
+    $islandora_object = islandora_object_load($potential_pid);
+    if (islandora_user_entity_link_object_get_link($islandora_object)) {
+      form_set_error('Entity already linked.', t('The entity @pid is already linked to a user.', array('@pid' => $potential_pid)));
+    }
   }
 }
 
@@ -86,12 +106,7 @@ function islandora_user_entity_link_form_user_profile_form_alter(&$form, &$form_
 function islandora_user_entity_link_form_user_profile_form_submit($form, &$form_state) {
   module_load_include('inc', 'islandora_user_entity_link', 'includes/utilities');
   if ($form_state['values']['entity_object']) {
-    // Single quote used as delimiter.
-    $entitiy_string_length = strlen($form_state['values']['entity_object']);
-    $id_start_pos = strrpos($form_state['values']['entity_object'], "'", -2) + 1;
-    $islandora_object_id_length = $entitiy_string_length - $id_start_pos - 1;
-    $islandora_object_id = substr($form_state['values']['entity_object'], $id_start_pos, $islandora_object_id_length);
-
+    $islandora_object_id = islandora_user_entity_link_decode_autocomplete($form_state['values']['entity_object']);
     islandora_user_entity_link_add_link($islandora_object_id, $form_state['values']['uid']);
   }
 }
