@@ -90,10 +90,10 @@ function islandora_user_entity_link_form_user_profile_form_validate($form, &$for
     $potential_pid  = islandora_user_entity_link_decode_autocomplete($form_state['values']['entity_object']);
     $islandora_object = islandora_object_load($potential_pid);
     if (!$islandora_object) {
-      form_set_error('Entity already linked.', t('A valid entry was not specified for the user-entity link.'));
+      form_set_error('entity_object', t('A valid entry was not specified for the user-entity link.'));
     }
     elseif (islandora_user_entity_link_object_get_link($islandora_object)) {
-      form_set_error('Entity already linked.', t('The entity @pid is already linked to a user.', array('@pid' => $potential_pid)));
+      form_set_error('entity_object', t('The entity @pid is already linked to a user.', array('@pid' => $potential_pid)));
     }
   }
 }
